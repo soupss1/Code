@@ -24,6 +24,11 @@ pygame.display.set_caption("Space Invaders")
 icon = pygame.image.load('ufo.png')
 pygame.display.set_icon(icon)
 
+# Speed Variables
+enemySpeed = 2
+enemyTwoSpeed = 1
+playerSpeed = 3
+
 # Player
 playerImg = pygame.image.load('spaceship.png')
 playerX = 370
@@ -42,8 +47,25 @@ for i in range(num_of_enemies): # Creates however many enemies specified in the 
     enemyImg.append(pygame.image.load('alien.png')) # Instead of = using .append stores it in the empty list
     enemyX.append(random.randint(0, 736))
     enemyY.append(random.randint(50, 150))
-    enemyX_change.append(2)
+    enemyX_change.append(enemySpeed)
     enemyY_change.append(40)
+    
+# Enemy 2
+enemy2Img = [] 
+enemy2X = []
+enemy2Y = []
+enemy2X_change = []
+enemy2Y_change = []
+enemy_2_health = []
+num_of_enemie2 = 3
+
+for i in range(num_of_enemie2): 
+    enemy2Img.append(pygame.image.load('alien2.png')) 
+    enemy2X.append(random.randint(0, 736))
+    enemy2Y.append(random.randint(50, 150))
+    enemy2X_change.append(enemyTwoSpeed)
+    enemy2Y_change.append(100)
+    enemy_2_health.append(3)
 
 # Bullet
 
@@ -56,7 +78,7 @@ bulletY_change = 9
 bullet_state = "ready"
 
 # Score
-score_value = 0
+score_value = 29
 font = pygame.font.Font('freesansbold.ttf', 32)
 
 textX = 10
@@ -88,17 +110,40 @@ def player(x, y):
 def enemy(x, y, i):
     screen.blit(enemyImg[i], (x, y)) 
     
+def enemy2(x, y, i):
+    screen.blit(enemy2Img[i], (x, y)) 
+    
 def fire_bullet(x, y):
     global bullet_state
     bullet_state = "fire"
     screen.blit(bulletImg, (x + 16, y + 10))
     
-def isCollision(enemyX, enemyY, bulletX, bulletY):
-    distance = math.sqrt((math.pow(enemyX - bulletX,2)) + (math.pow(enemyY - bulletY, 2))) # Calculate the distance between the enemy and bullet
+def isCollision(x, y, bulletX, bulletY):
+    distance = math.sqrt((math.pow(x - bulletX,2)) + (math.pow(y - bulletY, 2))) # Calculate the distance between the enemy and bullet
     if distance < 27:
         return True
     else:
         return False
+    
+def kill_enemies():
+    for j in range(num_of_enemies): # Runs for as many enemies 
+        enemyY[j] = 2000 # Moves enemies off screen
+                    
+    for z in range(num_of_enemie2):
+        enemy2Y[z] = 2000
+    
+    
+#def gameOver(y):
+
+    #if int(y) > 440:
+        #for j in range(num_of_enemies):
+            #enemyY[j] = 2000
+        #for v in range(num_of_enemie2):
+            #enemyY[v] = 2000
+        #game_over_text()
+        #return True
+    #else:
+        #return False
 
 # Game Loop
 running = True
@@ -110,10 +155,65 @@ while running:
     screen.blit(background, (0, 0))
     
     # Announce Rounds
-    if score_value >= 60:
+    if score_value >= 60: # Else if statement with the larger value on top so it prioritizes the higher value when running the code top to bottom
         round_number = 3
-    elif score_value >= 30:
-        round_number = 2
+    elif score_value >= 30: # When score value reaches this number it enters the next phase
+        for i in range(num_of_enemie2):
+            # Game Over
+            #gameOverCheck = gameOver(enemy2Y)
+            #if gameOverCheck == True:
+                #break
+
+            if enemy2Y[i] > 440: # Checks if enemy 2 crossese the players border
+                kill_enemies()
+                game_over_text()
+                break
+            
+            
+            enemy2X[i] += enemy2X_change[i] 
+    
+            if enemy2X[i] <= 0:
+                enemy2X[i] = 0
+                enemy2X_change[i] = enemyTwoSpeed
+                enemy2Y[i] += enemy2Y_change[i]
+
+            elif enemy2X[i] >= 740:
+                enemy2X[i] = 740
+                enemy2X_change[i] = -enemyTwoSpeed
+                enemy2Y[i] += enemy2Y_change[i]
+        
+        
+            # Collision
+            bullet_collision2 = isCollision(enemy2X[i], enemy2Y[i], bulletX, bulletY) # Checks for collision
+            
+            if bullet_collision2: # If collision is True
+                
+                enemy_2_health[i] -= 1 # Lower the enemy health by one
+                
+                print (enemy_2_health)
+                if enemy_2_health[i] == 0: # If enemy health is zero 
+                    
+                    bullet_state = "ready"
+                    bulletY = 480 # Reset bullet is to starting point
+                    explosion_sound = mixer.Sound("explosion.wav") # Loads sound from files and stores it in a variable
+                    explosion_sound.play() # Plays sound
+                    score_value += 3 # Points for this enemy
+                    # "Respawn" Enemy by reseting it's position back to the random starting locations
+                    enemy2X[i] = random.randint(0, 732)
+                    enemy2Y[i] = random.randint(50, 150)
+                    enemy_2_health[i] = 3 # Reset health back to original
+                else:
+                    bullet_state = "ready"
+                    bulletY = 480 # Reset bullet is to starting point
+                    explosion_sound = mixer.Sound("bloop.wav") # Play sound affect to alert the player that they hit their target
+                    explosion_sound.play()
+            enemy2(enemy2X[i], enemy2Y[i], i)
+                    
+        round_number = 2 # Change the round number at the top left of the screen
+        num_of_enemies = 0 # Change number of enemy1 in second phase
+        
+        
+
         
     
 
@@ -125,10 +225,10 @@ while running:
         
         if event.type == pygame.KEYDOWN: # Check for Keystroke
             if event.key == pygame.K_LEFT: # Check if Left Arrow is Pressed
-                playerX_change = -3
+                playerX_change = -playerSpeed
                 
             if event.key == pygame.K_RIGHT:
-                playerX_change = 3
+                playerX_change = playerSpeed
                 
             if event.key == pygame.K_SPACE:
                 if bullet_state is "ready":
@@ -156,8 +256,7 @@ while running:
         
         # Game Over
         if enemyY[i] > 440:
-            for j in range(num_of_enemies):
-                enemyY[j] = 2000
+            kill_enemies()
             game_over_text()
             break
             
@@ -166,12 +265,12 @@ while running:
     
         if enemyX[i] <= 0:
             enemyX[i] = 0
-            enemyX_change[i] = 2
+            enemyX_change[i] = enemySpeed
             enemyY[i] += enemyY_change[i]
 
         elif enemyX[i] >= 736:
             enemyX[i] = 736
-            enemyX_change[i] = -2
+            enemyX_change[i] = -enemySpeed
             enemyY[i] += enemyY_change[i]
             
             # Collision
