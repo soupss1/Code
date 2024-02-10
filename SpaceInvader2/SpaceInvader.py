@@ -78,7 +78,7 @@ bulletY_change = 9
 bullet_state = "ready"
 
 # Score
-score_value = 29
+score_value = 0
 font = pygame.font.Font('freesansbold.ttf', 32)
 
 textX = 10
@@ -210,7 +210,7 @@ while running:
             enemy2(enemy2X[i], enemy2Y[i], i)
                     
         round_number = 2 # Change the round number at the top left of the screen
-        num_of_enemies = 0 # Change number of enemy1 in second phase
+        num_of_enemies = 7 # Change number of enemy1 in second phase
         
         
 
