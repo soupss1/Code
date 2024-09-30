@@ -1,0 +1,232 @@
+\documentclass[11pt]{article}
+
+% To produce a letter size output. Otherwise will be A4 size.
+\usepackage[letterpaper]{geometry}
+
+% For enumerated lists using letters: a. b. etc.
+\usepackage{enumitem}
+
+\usepackage{amsmath}
+
+
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\begin{document}
+
+% Edit the following putting your first and last names and your lab section.
+\author{Angel Guzman\\
+Lab CSE-015-03L T 7:30-10:20pm}
+
+% Edit the following replacing X with the HW number.
+\title{CSE 015: Discrete Mathematics\\
+Fall 2019\\
+Homework \#2\\
+Solution}
+
+% Put today's date in the following.
+\date{September 30, 2024
+}
+\maketitle
+
+% ========== Begin questions here
+\begin{enumerate}
+
+\section{\textbf{Tautologies, Contingencies, and Contradictions}}
+\item 
+
+\textbf{Question 1: (($p \implies q$)$\land p$) $\implies q$}
+
+\begin{enumerate}[label=(\alph*)]
+\item
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c| }
+ \hline
+ p & q & $p \implies q$ & ($p \implies q$)$\land p$) & ($p \implies q$)$\land p$) $\implies q$ \\
+ \hline
+ F & F & T & F & T \\
+ F & T & T & F & T \\
+ T & F & F & F & T \\
+ T & T & T & T & T \\
+ \hline
+
+\end{tabular}
+\end{center}
+
+\item 
+This is a tautology as the truth table shows that no matter the truth values of the propositional variables the compound proposition will always be true.
+
+\end{enumerate}
+
+\textbf{Question 2: ($\neg r$) $\land$ ($q \implies r$) $\land q$}
+
+\begin{enumerate}[label=(\alph*)]
+\item
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c| }
+ \hline
+ r & q & $\neg r$ & $q \implies r$ & ($\neg r$) $\land$ ($q \implies r$) & (($\neg r$) $\land$ ($q \implies r$)) $\land q$ \\
+ \hline
+ F & F & T & T & T & F \\
+ F & T & T & F & F & F \\
+ T & F & F & T & F & F \\
+ T & T & F & T & F & F \\
+ \hline
+
+\end{tabular}
+\end{center}
+\item 
+This is a contradiction as no matter the truth values of the propositional variables the compound proposition will always be false
+
+\end{enumerate}
+
+\textbf{Question 3: ($ p \land q$) $\land $ ($\neg r \lor \neg q \lor \neg p$)}
+
+\begin{enumerate}[label=(\alph*)]
+\item
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c|c|c| }
+ \hline
+ p & q & r & $\neg p$ & $\neg q$ & $\neg r$ & $ p \land q$ & $\neg r \lor \neg q \lor \neg p$ \\
+ \hline
+ T & T & T & F & F & F & T & F \\
+ F & T & T & T & F & F & F & T \\
+ T & F & T & F & T & F & F & T \\
+ F & F & T & T & T & F & F & T \\
+ T & T & F & F & F & T & T & T \\
+ F & T & F & T & F & T & F & T \\
+ T & F & F & F & T & T & F & T \\
+ F & F & F & T & T & T & F & T \\
+ \hline
+
+\end{tabular}
+\end{center}
+\item 
+This compound proposition is a contingency as it is neither a tautology nor a contradiction.
+
+\end{enumerate}
+
+\section{\textbf{Inferences and Tautologies}}
+
+\textbf{Question 1: $(( p \lor q) \land (\neg p \lor r)) \implies (q \lor r)$}
+
+\begin{enumerate}[label=(\alph*)]
+\item
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c|c|c|c| }
+ \hline
+ p & q & r & $\neg p$ & $p \lor q$ & $\neg p \lor r$ & $(( p \lor q) \land (\neg p \lor r))$ & $q \lor r$ & $(( p \lor q) \land (\neg p \lor r)) \implies (q \lor r)$  \\
+ \hline
+ T & T & T & F & T & T & T & T & T \\
+ F & T & T & T & T & T & T & T & T \\
+ T & F & T & F & T & T & T & T & T \\
+ F & F & T & T & F & T & F & T & T \\
+ T & T & F & F & T & F & F & T & T \\
+ F & T & F & T & T & T & T & T & T \\
+ T & F & F & F & T & F & F & F & T \\
+ F & F & F & T & F & T & F & F & T \\
+ \hline
+
+\end{tabular}
+\end{center}
+\item 
+This is a tautology as the truth table shows that no matter the truth values of the propositional variables the compound proposition will always be true.
+
+\end{enumerate}
+
+\textbf{Question 2: $(\neg q \land (p \implies q)) \implies \neg p$}
+
+\begin{enumerate}[label=(\alph*)]
+\item
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c|c|c|c| }
+ \hline
+ p & q & $\neg p$ & $\neg q$ & $p \implies q$ & $\neg q \land (p \implies q)$ & $(\neg q \land (p \implies q)) \implies \neg p$ \\
+ \hline
+ T & T & F & F & T & F & T \\
+ F & T & T & F & T & F & T \\
+ T & F & F & T & F & F & T \\
+ F & F & T & T & T & T & T \\
+
+ \hline
+
+\end{tabular}
+\end{center}
+\item 
+This is a tautology as the truth table shows that no matter the truth values of the propositional variables the compound proposition will always be true.
+
+\end{enumerate}
+
+\section{\textbf{Finite Domains}}
+\textbf{Question 1: $\forall x(P(x) \lor Q(x)) $;}
+\begin{enumerate}[label=(\alph*)]
+\item
+$(P(a) \lor Q(a)) \land (P(b) \lor Q(b)) \land (P(c) \lor Q(c)) \land (P(d) \lor Q(d))$
+
+\end{enumerate}
+
+\textbf{Question 2: $\neg \exists \neg P(x)$;}
+\begin{enumerate}[label=(\alph*)]
+\item
+$\neg P(a) \land \neg P(b) \land \neg P(c) \land \neg P(d)$
+
+\end{enumerate}
+
+\textbf{Question 3: $\forall x(P(x) \land \neg Q(x)) $;}
+\begin{enumerate}[label=(\alph*)]
+\item
+$(P(a) \land \neg Q(a)) \land (P(b) \land \neg Q(b)) \land (P(c) \land \neg Q(c)) \land (P(d) \land \neg Q(d)) \land$
+
+\end{enumerate}
+
+\section{\textbf{Quantifiers and Nested Quantifiers}}
+\textbf{Question 1: Every number is the opposite of another number}
+\begin{enumerate}[label=(\alph*)]
+\item
+$\forall x(\exists$(y = -x))
+
+\end{enumerate}
+
+\textbf{Question 2: Every positive number is the square of another number}
+\begin{enumerate}[label=(\alph*)]
+\item
+$\forall x(\exists (x^2 = |y|))$
+
+\end{enumerate}
+
+\textbf{Question 3: There is no number whose square is negative}
+\begin{enumerate}[label=(\alph*)]
+\item
+$\forall x(\neg \exists (x^2 < 0 ))$
+
+\end{enumerate}
+
+\textbf{Question 4: The product of any two negative numbers is positive}
+\begin{enumerate}[label=(\alph*)]
+\item
+$\forall x \forall y(-x * -y \implies |z|)$
+
+\end{enumerate}
+
+\section{\textbf{Negating Formulas with Nested Quantifiers}}
+\textbf{Question 1: $\exists x \exists y (P(x) \implies Q(y))$}
+\begin{enumerate}[label=(\alph*)]
+\item
+$\forall x \forall y(-P(x) \implies \neg Q(y))$
+
+\end{enumerate}
+
+\textbf{Question 2: $\exists y (\exists x A(x, y) \lor \forall x B(x, y))$}
+\begin{enumerate}[label=(\alph*)]
+\item
+$\forall y (\forall x \neg A(x, y) \lor \exists x \neg B(x, y))$
+
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
